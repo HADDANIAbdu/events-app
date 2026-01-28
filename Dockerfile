@@ -1,27 +1,27 @@
 # Build stage
-# Utiliser Maven et JDK pour construire l'app
-FROM maven:3.9.1-eclipse-temurin-20 AS build
+FROM maven:3.9.9-eclipse-temurin-21-alpine AS build
 
-# Définir le repértoire de traville
 WORKDIR /app
 
-# Copier les fichiers pom.xml et sources
 COPY pom.xml .
-COPY src ./src
+RUN mvn dependency:go-offline -B
 
-# Construire l'app et créer le jar
-RUN mvn clean package -DskipTests
+COPY src ./src
+RUN mvn clean package -DskipTests -B
 
 # Runtime stage
-# Créer l'image finale légère pour exécuter Spring Boot
-FROM eclipse-temurin:20-jdk
+FROM eclipse-temurin:21-jre-alpine
+
 WORKDIR /app
 
-# Copier le jar depuis build stage
 COPY --from=build /app/target/*.jar events.jar
 
-# exposer le port sur lequel Spring Boot tourne
+RUN addgroup -g 1000 appuser && \
+    adduser -D -u 1000 -G appuser appuser && \
+    chown -R appuser:appuser /app
+
+USER appuser
+
 EXPOSE 8080
 
-# exécuter le jar
 ENTRYPOINT ["java", "-jar", "events.jar"]
