@@ -3,11 +3,11 @@
 .env.local
 .env.*.local
 
-# Maven
-target/
+# Maven - TEMPORAIREMENT désactivé pour Render
+# target/
+
+# Maven wrapper (on garde celui-ci ignoré)
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
 # IDE
 .idea/

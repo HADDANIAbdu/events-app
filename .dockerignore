@@ -1,45 +1,37 @@
-# flyctl launch added from .gitignore
-**\HELP.md
-**\target
-!**\.mvn\wrapper\maven-wrapper.jar
-!**\**\src\main\**\target
-!**\**\src\test\**\target
+# Maven
+target/
+.mvn/
+mvnw
+mvnw.cmd
 
-### STS ###
-**\.apt_generated
-**\.classpath
-**\.factorypath
-**\.project
-**\.settings
-**\.springBeans
-**\.sts4-cache
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
 
-### IntelliJ IDEA ###
-**\.idea
-**\*.iws
-**\*.iml
-**\*.ipr
+# Git
+.git/
+.gitignore
 
-### NetBeans ###
-nbproject\private
-nbbuild
-dist
-nbdist
-.nb-gradle
-**\build
-!**\**\src\main\**\build
-!**\**\src\test\**\build
+# Environment
+.env
+.env.*
+!.env.example
 
-### VS Code ###
-**\.vscode
+# Logs
+*.log
 
-# flyctl launch added from .idea\.gitignore
-# Default ignored files
-.idea\shelf
-.idea\workspace.xml
-# Editor-based HTTP Client requests
-.idea\httpRequests
-# Datasource local storage ignored files
-.idea\dataSources
-.idea\dataSources.local.xml
-fly.toml
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Docs
+README.md
+docs/
