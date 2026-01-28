@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Events Of Participant</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/vendor/css/core.css">
+    <link rel="stylesheet" href="/vendor/css/theme-default.css">
+    <link rel="stylesheet" href="/css/demo.css">
+</head>
+<body>
+    <nav sec:authorize="isAuthenticated()" class="navbar navbar-expand-lg bg-body-tertiary pt-1_5 pb-1_5">
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <a href="/">
+                <span class="app-brand-text demo menu-text fw-bold ms-2">
+            BelamaEvents
+          </span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active ms-3" href="/events/" style="color: white">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ms-3" href="/users/admins" style="color: white">Admins</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ms-3" href="/users/participants" style="color: white">Participants</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ms-3" href="/payments/" style="color: white">Payments</a>
+                </li>
+            </ul>
+            <form method="post" action="/logout">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" class="btn btn-danger ms-3">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+    <div sec:authorize="isAuthenticated()" class="card d-flex align-items-center vh-100" style="height: auto !important;">
+        <div class="table-responsive text-nowrap">
+            <div class="row">
+                <div class="d-flex justify-content-between align-items-center py-4 px-5 ">
+                    <form method="get" th:action="@{/users/participants/{id}/add-events(id=${participantId})}">
+                        <button class="btn add-new btn-primary ms-12" type="submit">
+                            <i class="fa-solid fa-plus me-3"></i>
+                            <span>Add New Event to Participant</span>
+                        </button>
+                    </form>
+                </div>
+                <div th:if="${success}" class="alert alert-success d-flex" role="alert">
+                    <strong th:text="${success}"></strong>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="container">
+                <ul class="notes">
+                    <li th:each="event : ${events}">
+                        <div class="d-flex align-items-start mb-4">
+                            <img class="card-img-top me-3" src="/img/event4.jpg" alt="Event image" style="width: 250px; height: 200px; border-radius: 8px; object-fit: cover;">
+
+                            <div class="note">
+                                <h3 class="note-title" th:text="${event.title}"></h3>
+                                <b style="color: #5f61e6" class="note-text" th:text="${event.description}"></b>
+                                <div class="d-flex align-items-center mt-3">
+                                    <i class="fa-solid fa-location-dot me-3"></i>
+                                    <b th:text="${event.location}" style="margin-bottom: -3px; color: #5f61e6;"></b>
+                                </div>
+                                <div class="d-flex align-items-center mt-3">
+                                    <i class="fa-solid fa-calendar-days me-3"></i>
+                                    <b th:text="${event.date}" style="margin-bottom: -3px; color: #5f61e6;"></b>
+                                </div>
+                                <form th:method="delete" th:action="@{/users/participants/{id}/delete-event/{eventId}(id=${participantId}, eventId=${event.id})}">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                    <button type="submit" class="btn btn-danger mt-3">
+                                        <i class="fa-solid fa-trash me-3"></i>
+                                        <span>Delete Event</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
