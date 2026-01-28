@@ -1,5 +1,7 @@
-# Maven
-target/
+# Maven - Garder seulement le JAR final
+target/*
+!target/*.jar
+
 .mvn/
 mvnw
 mvnw.cmd
